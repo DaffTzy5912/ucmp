@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Upload Music</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="upload-container">
+        <h2>Upload Lagu (MP3)</h2>
+        <label for="musicFile">Pilih File MP3:</label>
+        <input type="file" id="musicFile" accept=".mp3" />
+
+        <label for="musicUrl">Atau masukkan URL MP3:</label>
+        <input type="text" id="musicUrl" placeholder="Masukkan URL MP3" />
+
+        <label for="songTitle">Judul Lagu:</label>
+        <input type="text" id="songTitle" placeholder="Judul Lagu" />
+
+        <label for="songArtist">Nama Penyanyi:</label>
+        <input type="text" id="songArtist" placeholder="Nama Penyanyi" />
+
+        <label for="coverImage">Gambar Cover (Opsional):</label>
+        <input type="file" id="coverImage" accept=".jpg, .jpeg, .png" />
+
+        <button onclick="uploadSong()">Upload</button>
+        <p id="status"></p>
+    </div>
+
+    <script src="uploader.js"></script>
+</body>
+</html>
