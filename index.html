@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Music Player</title>
+    <title>Modern Music Player</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <div class="music-player">
-        <!-- Playlist di atas -->
-        <div class="playlist-section">
-            <h3>Pilih Lagu</h3>
-            <select id="playlist" onchange="changeSong(this.value)" class="modern-select">
-                <option value="">-- Pilih Lagu --</option>
-            </select>
+
+        <!-- Playlist -->
+        <div class="playlist-list">
+            <h3>Playlist</h3>
+            <ul id="playlistList"></ul>
         </div>
 
         <!-- Album Art -->
@@ -30,12 +29,23 @@
         <!-- Audio Player -->
         <audio id="audioPlayer"></audio>
 
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <span id="currentTime">0:00</span>
+            <input type="range" id="progressBar" value="0" max="100" class="progress-bar">
+            <span id="duration">0:00</span>
+        </div>
+
+        <!-- Volume Control -->
+        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1" class="volume-control">
+
         <!-- Tombol Kontrol -->
         <div class="controls">
             <div class="control-button" onclick="prevSong()">&#10094;</div>
             <div class="control-button" onclick="togglePlay()" id="playPauseBtn">&#9658;</div>
             <div class="control-button" onclick="nextSong()">&#10095;</div>
         </div>
+
     </div>
 
     <script src="app.js"></script>
