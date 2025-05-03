@@ -10,6 +10,8 @@ const durationEl = document.getElementById('duration');
 
 let songs = [];
 let currentSong = 0;
+let isShuffle = false;
+let isRepeat = false;
 
 // Load dari localStorage
 window.onload = () => {
@@ -32,26 +34,35 @@ function togglePlay() {
 }
 
 function nextSong() {
-    currentSong = (currentSong + 1) % songs.length;
+    if (isShuffle) {
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * songs.length);
+        } while (randomIndex === currentSong && songs.length > 1);
+        currentSong = randomIndex;
+    } else {
+        currentSong = (currentSong + 1) % songs.length;
+    }
+
     loadSong(currentSong);
     audioPlayer.play();
     playPauseBtn.innerHTML = '❚❚';
 }
 
 function prevSong() {
-    currentSong = (currentSong - 1 + songs.length) % songs.length;
+    if (isShuffle) {
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * songs.length);
+        } while (randomIndex === currentSong && songs.length > 1);
+        currentSong = randomIndex;
+    } else {
+        currentSong = (currentSong - 1 + songs.length) % songs.length;
+    }
+
     loadSong(currentSong);
     audioPlayer.play();
     playPauseBtn.innerHTML = '❚❚';
-}
-
-function changeSong(index) {
-    if (index !== '') {
-        currentSong = parseInt(index);
-        loadSong(currentSong);
-        audioPlayer.play();
-        playPauseBtn.innerHTML = '❚❚';
-    }
 }
 
 function loadSong(index) {
@@ -73,7 +84,10 @@ function updatePlaylist() {
     playlistList.innerHTML = '';
     songs.forEach((song, index) => {
         const li = document.createElement('li');
-        li.textContent = `${song.title} - ${song.artist}`;
+        li.innerHTML = `
+            ${song.title} - ${song.artist}
+            <span class="delete-btn" onclick="deleteSong(${index}); event.stopPropagation()">❌</span>
+        `;
         li.onclick = () => {
             currentSong = index;
             loadSong(currentSong);
@@ -82,6 +96,38 @@ function updatePlaylist() {
         };
         playlistList.appendChild(li);
     });
+}
+
+function deleteSong(index) {
+    if (confirm("Yakin ingin menghapus lagu ini dari playlist?")) {
+        songs.splice(index, 1);
+
+        if (index < currentSong) {
+            currentSong--;
+        }
+
+        if (songs.length === 0) {
+            audioPlayer.src = "";
+            songTitle.textContent = "No Song Playing";
+            artistName.textContent = "Add a song to start";
+            albumArt.innerHTML = "<span>Album Art</span>";
+        } else {
+            loadSong(currentSong);
+        }
+
+        localStorage.setItem('songs', JSON.stringify(songs));
+        updatePlaylist();
+    }
+}
+
+function toggleShuffle() {
+    isShuffle = !isShuffle;
+    document.querySelectorAll('.control-button')[0].classList.toggle('active', isShuffle);
+}
+
+function toggleRepeat() {
+    isRepeat = !isRepeat;
+    document.querySelectorAll('.control-button')[4].classList.toggle('active', isRepeat);
 }
 
 // Update progress bar saat lagu diputar
@@ -114,4 +160,11 @@ document.getElementById('volumeControl').addEventListener('input', function () {
 });
 
 // Next lagu otomatis
-audioPlayer.addEventListener('ended', nextSong);
+audioPlayer.addEventListener('ended', () => {
+    if (isRepeat) {
+        audioPlayer.currentTime = 0;
+        audioPlayer.play();
+    } else {
+        nextSong();
+    }
+});
