@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Modern Music Player</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192x192.png">
+<meta name="theme-color" content="#1e1e2f">
 </head>
 <body>
     <div class="music-player">
@@ -53,6 +56,14 @@
         </div>
 
     </div>
+
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').then(() => {
+            console.log('Service Worker Terdaftar');
+        });
+    }
+    </script>
 
     <script src="app.js"></script>
 </body>
