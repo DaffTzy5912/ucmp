@@ -1,0 +1,21 @@
+{
+  "name": "Music Player",
+  "short_name": "My Music",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#1e1e2f",
+  "theme_color": "#1e1e2f",
+  "description": "Music Player sederhana dengan upload lagu dan playlist.",
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
