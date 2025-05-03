@@ -8,27 +8,33 @@
 </head>
 <body>
     <div class="music-player">
+        <!-- Playlist di atas -->
+        <div class="playlist-section">
+            <h3>Pilih Lagu</h3>
+            <select id="playlist" onchange="changeSong(this.value)" class="modern-select">
+                <option value="">-- Pilih Lagu --</option>
+            </select>
+        </div>
+
+        <!-- Album Art -->
         <div class="album-art" id="albumArt">
             <span>Album Art</span>
         </div>
 
+        <!-- Info Lagu -->
         <div class="song-info">
             <h2 id="songTitle">No Song Playing</h2>
             <p id="artistName">Add a song to start</p>
         </div>
 
+        <!-- Audio Player -->
         <audio id="audioPlayer"></audio>
 
+        <!-- Tombol Kontrol -->
         <div class="controls">
             <div class="control-button" onclick="prevSong()">&#10094;</div>
             <div class="control-button" onclick="togglePlay()" id="playPauseBtn">&#9658;</div>
             <div class="control-button" onclick="nextSong()">&#10095;</div>
-        </div>
-
-        <div class="add-music">
-            <select id="playlist" onchange="changeSong(this.value)">
-                <option value="">Pilih Lagu</option>
-            </select>
         </div>
     </div>
 
