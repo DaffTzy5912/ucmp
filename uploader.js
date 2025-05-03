@@ -55,7 +55,7 @@ function uploadSong() {
             title: titleInput || "Unknown Title",
             artist: artistInput || "Unknown Artist",
             url: file || urlInput,
-            cover: coverFile || `https://picsum.photos/seed/${Date.now()}/300/300` // Fallback gambar
+            cover: coverFile || `https://picsum.photos/seed/${Date.now()}/300/300`
         };
 
         songs.push(newSong);
