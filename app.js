@@ -54,6 +54,7 @@ function changeSong(index) {
 function loadSong(index) {
     if (songs[index]) {
         const song = songs[index];
+        console.log("Loading Song:", song); // Debugging
         audioPlayer.src = song.url;
         songTitle.textContent = song.title;
         artistName.textContent = song.artist;
