@@ -109,3 +109,8 @@ body {
 .control-button:hover {
     background: #666;
 }
+
+/* Tambahkan styling untuk tombol shuffle & repeat */
+.control-button.active {
+    background-color: #888;
+}
