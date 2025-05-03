@@ -4,10 +4,9 @@ function uploadSong() {
     const urlInput = document.getElementById('musicUrl').value.trim();
     const titleInput = document.getElementById('songTitle').value.trim();
     const artistInput = document.getElementById('songArtist').value.trim();
-    const coverInput = document.getElementById('coverImage');
+    const coverUrlInput = document.getElementById('coverUrl').value.trim(); // Input URL gambar cover
 
     let file = fileInput.files[0];
-    let coverFile = coverInput.files[0];
 
     // Validasi file MP3
     if (!file && !urlInput) {
@@ -23,7 +22,7 @@ function uploadSong() {
         }
     }
 
-    // Baca file MP3 dan gambar cover
+    // Baca file MP3
     const promises = [];
 
     // Untuk file MP3
@@ -36,16 +35,6 @@ function uploadSong() {
         promises.push(new Promise(resolve => setTimeout(resolve, 100))); // Tunggu sebentar
     }
 
-    // Untuk gambar cover
-    if (coverFile) {
-        const coverReader = new FileReader();
-        coverReader.onload = function(e) {
-            coverFile = e.target.result; // Simpan sebagai Base64
-        };
-        coverReader.readAsDataURL(coverFile);
-        promises.push(new Promise(resolve => setTimeout(resolve, 100))); // Tunggu sebentar
-    }
-
     // Tunggu semua proses pembacaan selesai
     Promise.all(promises).then(() => {
         // Simpan ke localStorage
@@ -55,7 +44,7 @@ function uploadSong() {
             title: titleInput || "Unknown Title",
             artist: artistInput || "Unknown Artist",
             url: file || urlInput,
-            cover: coverFile || `https://picsum.photos/seed/${Date.now()}/300/300`
+            cover: coverUrlInput || `https://picsum.photos/seed/${Date.now()}/300/300` // Gunakan URL gambar cover
         };
 
         songs.push(newSong);
@@ -68,6 +57,6 @@ function uploadSong() {
         document.getElementById('musicUrl').value = '';
         document.getElementById('songTitle').value = '';
         document.getElementById('songArtist').value = '';
-        document.getElementById('coverImage').value = '';
+        document.getElementById('coverUrl').value = ''; // Reset input URL gambar cover
     });
 }
