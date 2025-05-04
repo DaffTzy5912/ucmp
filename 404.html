@@ -1,48 +1,185 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>404 - Halaman Tidak Ditemukan</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>404</title>
   <style>
-    body {
+     {
       margin: 0;
       padding: 0;
-      font-family: sans-serif;
-      background: #1a1a1a;
-      color: #fff;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: #eee;
+      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      flex-direction: column;
+      padding: 40px 20px;
       text-align: center;
+      flex-direction: column;
     }
-    h1 {
-      font-size: 6em;
-      margin: 0;
-      color: #ff4c4c;
+
+    .container {
+      perspective: 1000px;
     }
-    p {
-      font-size: 1.5em;
+
+    .card-3d {
+      max-width: 600px;
+      padding: 50px 30px;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease;
+      transform-style: preserve-3d;
+      animation: fadeInUp 1s ease-out;
     }
-    a {
-      margin-top: 20px;
+
+    .error-code {
+      font-size: 6rem;
+      color: #e53935;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    .error-message {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      color: #555;
+    }
+
+    .illustration {
+      width: 150px;
+      height: auto;
+      margin: 0 auto 30px;
+      fill: #e53935;
+      opacity: 0.8;
+      transition: transform 0.4s ease;
+    }
+
+    .card-3d:hover .illustration {
+      transform: rotate(3deg) scale(1.05);
+    }
+
+    a.button {
       display: inline-block;
-      padding: 10px 20px;
-      background: #ff4c4c;
+      padding: 12px 24px;
+      background-color: #e53935;
       color: #fff;
       text-decoration: none;
-      border-radius: 5px;
-      transition: background 0.3s;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: background-color 0.3s ease, transform 0.2s ease;
     }
-    a:hover {
-      background: #e53935;
+
+    a.button:hover {
+      background-color: #ff4c4c;
+      transform: translateY(-2px);
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .error-code {
+        font-size: 4rem;
+      }
+
+      .illustration {
+        width: 100px;
+      }
+
+      .error-message {
+        font-size: 1.1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>404</h1>
-  <p>Oops! Halaman tidak ditemukan.</p>
-  <a href="/">Kembali ke Beranda</a>
+
+  <div class="container" id="card">
+    <div class="card-3d">
+      <svg class="illustration" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+      </svg>
+
+      <div class="error-code">404</div>
+
+      <div class="error-message">
+        Oops! Halaman yang Anda cari tidak tersedia.
+      </div>
+
+      <a href="/" class="button">Kembali ke Beranda</a>
+    </div>
+  </div>
+
+  <div class="footer">
+    &copy; 2025 xdpzq. Semua Hak Dilindungi.
+  </div>
+
+  <script>
+    const card = document.getElementById('card');
+    const inner = card.querySelector('.card-3d');
+
+    let isHolding = false;
+
+    card.addEventListener('mousedown', () => isHolding = true);
+    card.addEventListener('mouseup', () => {
+      isHolding = false;
+      inner.style.transform = 'rotateX(0) rotateY(0)';
+    });
+    card.addEventListener('mouseleave', () => {
+      isHolding = false;
+      inner.style.transform = 'rotateX(0) rotateY(0)';
+    });
+    card.addEventListener('mousemove', e => {
+      if (!isHolding) return;
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = -(y - centerY) / 8;
+      const rotateY = (x - centerX) / 8;
+      inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    card.addEventListener('touchstart', () => isHolding = true);
+    card.addEventListener('touchend', () => {
+      isHolding = false;
+      inner.style.transform = 'rotateX(0) rotateY(0)';
+    });
+    card.addEventListener('touchmove', e => {
+      if (!isHolding) return;
+      const touch = e.touches[0];
+      const rect = card.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = -(y - centerY) / 8;
+      const rotateY = (x - centerX) / 8;
+      inner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+  </script>
+
 </body>
 </html>
