@@ -111,6 +111,21 @@
         font-size: 1.1rem;
       }
     }
+    
+    body, html {
+  -webkit-user-drag: none;
+  user-select: none;
+  overflow: hidden;
+  touch-action: none;
+}
+
+body > *:not(.container) {
+  pointer-events: none;
+}
+
+.container, .card-3d, .card-3d * {
+  pointer-events: auto;
+}
   </style>
 </head>
 <body>
